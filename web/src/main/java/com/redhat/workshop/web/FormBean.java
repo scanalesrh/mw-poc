@@ -10,8 +10,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.redhat.workshop.model.MyForm;
 import com.redhat.workshop.web.proxy.service.ServiceLocal;
+import com.redhat.workshop.ws.MyForm;
+import com.redhat.workshop.ws.OutMessage;
 
 @Named("formBean")
 @SessionScoped
@@ -44,7 +45,7 @@ public class FormBean implements Serializable {
 	}
 	
 	public String procesaForm(){
-		this.result = service.callFormService(form);
+		this.result = ((OutMessage)service.callFormService(form)).getOut();
 		return "result.xhtml";
 	}
 
@@ -54,6 +55,14 @@ public class FormBean implements Serializable {
 
 	public void setResult(String result) {
 		this.result = result;
+	}
+
+	public MyForm getForm() {
+		return form;
+	}
+
+	public void setForm(MyForm form) {
+		this.form = form;
 	}
 
 }

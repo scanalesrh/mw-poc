@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="MyLogic" targetNamespace="urn:com.redhat.workshop:services:1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="urn:com.redhat.workshop:services:1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:com.redhat.workshop:services:1.0" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:com.redhat.workshop:services:1.0">
+  <xs:element name="myForm" type="tns:myForm"/>
+  <xs:element name="outMessage" type="tns:outMessage"/>
+  <xs:complexType name="myForm">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="outMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="out" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="processService" type="tns:processService"/>
+  <xs:complexType name="processService">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="myForm" type="tns:myForm"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="processServiceResponse" type="tns:processServiceResponse"/>
+  <xs:complexType name="processServiceResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="outMessage" type="tns:outMessage"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="processService">
+    <wsdl:part name="parameters" element="tns:processService">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="processServiceResponse">
+    <wsdl:part name="parameters" element="tns:processServiceResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="MyLogicPortType">
+    <wsdl:operation name="processService">
+      <wsdl:input name="processService" message="tns:processService">
+    </wsdl:input>
+      <wsdl:output name="processServiceResponse" message="tns:processServiceResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MyLogicSoapBinding" type="tns:MyLogicPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="processService">
+      <soap:operation soapAction="processService" style="document"/>
+      <wsdl:input name="processService">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="processServiceResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MyLogic">
+    <wsdl:port name="MyLogicPort" binding="tns:MyLogicSoapBinding">
+      <soap:address location="http://localhost:8080/services/MyLogic"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

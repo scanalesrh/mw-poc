@@ -9,7 +9,7 @@
 	<h:form>
 		<h:outputLabel value="Tipo de formulario: " />
 		<h:inputText value="#{formBean.form.tipo}" />
-		<h:commandButton action="result" value="Enviar" />
+		<h:commandButton action="#{formBean.procesaForm()}" value="Enviar" />
 	</h:form>
 </body>
 </html>

@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sy:switchyard xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:sy="urn:switchyard-config:switchyard:1.1" name="services" targetNamespace="urn:com.redhat.workshop:services:1.0">
-  <sca:composite name="services" targetNamespace="urn:com.redhat.workshop:services:1.0"/>
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:soap="urn:switchyard-component-soap:config:1.1" xmlns:sy="urn:switchyard-config:switchyard:1.1" xmlns:transform="urn:switchyard-config:transform:1.1" name="services" targetNamespace="urn:com.redhat.workshop:services:1.0">
+  <sca:composite name="services" targetNamespace="urn:com.redhat.workshop:services:1.0">
+    <sca:component name="MyLogicBean">
+      <bean:implementation.bean class="com.redhat.workshop.services.MyLogicBean"/>
+      <sca:service name="MyLogic">
+        <sca:interface.java interface="com.redhat.workshop.services.MyLogic"/>
+      </sca:service>
+    </sca:component>
+    <sca:service name="MyLogicPortType" promote="MyLogicBean/MyLogic">
+      <sca:interface.wsdl interface="MyLogic.wsdl#wsdl.porttype(MyLogicPortType)"/>
+      <soap:binding.soap name="soap1">
+        <soap:messageComposer unwrapped="true"/>
+        <soap:wsdl>MyLogic.wsdl</soap:wsdl>
+      </soap:binding.soap>
+    </sca:service>
+  </sca:composite>
+  <sy:transforms>
+    <transform:transform.jaxb from="java:java.lang.String" to="{urn:com.redhat.workshop:services:1.0}processServiceResponse"/>
+    <transform:transform.jaxb from="{urn:com.redhat.workshop:services:1.0}processService" to="java:com.redhat.workshop.services.MyForm"/>
+    <transform:transform.jaxb from="java:com.redhat.workshop.services.OutMessage" to="{urn:com.redhat.workshop:services:1.0}processServiceResponse"/>
+  </sy:transforms>
 </sy:switchyard>

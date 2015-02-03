@@ -2,10 +2,11 @@ package com.redhat.workshop.web.proxy.service;
 
 import javax.ejb.Local;
 
-import com.redhat.workshop.model.MyForm;
+import com.redhat.workshop.ws.MyForm;
+import com.redhat.workshop.ws.OutMessage;
 
 @Local
 public interface ServiceLocal {
 
-		String callFormService(MyForm form); 
+	OutMessage callFormService(MyForm form); 
 }

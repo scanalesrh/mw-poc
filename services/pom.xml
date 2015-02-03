@@ -106,11 +106,6 @@
 			<version>${switchyard.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.redhat.workshop</groupId>
-			<artifactId>model</artifactId>
-			<version>1.0</version>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
