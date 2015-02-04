@@ -8,7 +8,11 @@
 package com.redhat.workshop.ws;
 
 public class MyForm  implements java.io.Serializable {
-    private java.lang.String tipo;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4240704064037083623L;
+	private java.lang.String tipo;
 
     public MyForm() {
     }

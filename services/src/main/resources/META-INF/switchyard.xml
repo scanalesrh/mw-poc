@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:soap="urn:switchyard-component-soap:config:1.1" xmlns:sy="urn:switchyard-config:switchyard:1.1" xmlns:transform="urn:switchyard-config:transform:1.1" name="services" targetNamespace="urn:com.redhat.workshop:services:1.0">
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:resteasy="urn:switchyard-component-resteasy:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:soap="urn:switchyard-component-soap:config:1.1" xmlns:sy="urn:switchyard-config:switchyard:1.1" xmlns:transform="urn:switchyard-config:transform:1.1" name="services" targetNamespace="urn:com.redhat.workshop:services:1.0">
   <sca:composite name="services" targetNamespace="urn:com.redhat.workshop:services:1.0">
     <sca:component name="MyLogicBean">
       <bean:implementation.bean class="com.redhat.workshop.services.MyLogicBean"/>
       <sca:service name="MyLogic">
         <sca:interface.java interface="com.redhat.workshop.services.MyLogic"/>
       </sca:service>
+      <sca:reference name="HelloWorld">
+        <sca:interface.java interface="com.redhat.workshop.services.reference.HelloWorld"/>
+      </sca:reference>
     </sca:component>
     <sca:service name="MyLogicPortType" promote="MyLogicBean/MyLogic">
       <sca:interface.wsdl interface="MyLogic.wsdl#wsdl.porttype(MyLogicPortType)"/>
@@ -14,6 +17,20 @@
         <soap:wsdl>MyLogic.wsdl</soap:wsdl>
       </soap:binding.soap>
     </sca:service>
+    <sca:service name="MyLogic" promote="MyLogicBean/MyLogic">
+      <sca:interface.java interface="com.redhat.workshop.services.MyLogic"/>
+      <resteasy:binding.rest name="rest1">
+        <resteasy:interfaces>com.redhat.workshop.services.MyLogicResource</resteasy:interfaces>
+        <resteasy:contextPath>rest</resteasy:contextPath>
+      </resteasy:binding.rest>
+    </sca:service>
+    <sca:reference name="HelloWorld" multiplicity="0..1" promote="MyLogicBean/HelloWorld">
+      <sca:interface.java interface="com.redhat.workshop.services.reference.HelloWorld"/>
+      <resteasy:binding.rest name="rest1">
+        <resteasy:interfaces>com.redhat.workshop.services.reference.HelloWorldResource</resteasy:interfaces>
+        <resteasy:address>http://localhost:8180/remote-services</resteasy:address>
+      </resteasy:binding.rest>
+    </sca:reference>
   </sca:composite>
   <sy:transforms>
     <transform:transform.jaxb from="java:java.lang.String" to="{urn:com.redhat.workshop:services:1.0}processServiceResponse"/>

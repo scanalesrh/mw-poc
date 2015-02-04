@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
+encoding//src/main/java/com/redhat/workshop/util/MyFormVO.java=UTF-8
 encoding//src/main/java/com/redhat/workshop/ws/MyForm.java=UTF-8
 encoding//src/main/java/com/redhat/workshop/ws/MyLogic.java=UTF-8
 encoding//src/main/java/com/redhat/workshop/ws/MyLogicLocator.java=UTF-8
