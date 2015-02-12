@@ -6,13 +6,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/process")
-public interface MyLogicResource {
-
-	@Path("/form")
+@Path("/service")
+public interface CompTresSource {
+	@Path("/comp/call/tres")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	@POST()
-	String processService(MyForm form);
-	
+	@POST
+	String compCall(MyForm form);
+
 }

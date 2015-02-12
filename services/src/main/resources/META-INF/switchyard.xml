@@ -6,8 +6,8 @@
       <sca:service name="MyLogic">
         <sca:interface.java interface="com.redhat.workshop.services.MyLogic"/>
       </sca:service>
-      <sca:reference name="HelloWorld">
-        <sca:interface.java interface="com.redhat.workshop.services.reference.HelloWorld"/>
+      <sca:reference name="BPMSRestRemoteService">
+        <sca:interface.java interface="com.redhat.workshop.services.reference.BPMSRestRemoteService"/>
       </sca:reference>
     </sca:component>
     <sca:service name="MyLogicPortType" promote="MyLogicBean/MyLogic">
@@ -24,17 +24,45 @@
         <resteasy:contextPath>rest</resteasy:contextPath>
       </resteasy:binding.rest>
     </sca:service>
-    <sca:reference name="HelloWorld" multiplicity="0..1" promote="MyLogicBean/HelloWorld">
-      <sca:interface.java interface="com.redhat.workshop.services.reference.HelloWorld"/>
+    <sca:reference name="BPMSRestRemoteService" multiplicity="0..1" promote="MyLogicBean/BPMSRestRemoteService">
+      <sca:interface.java interface="com.redhat.workshop.services.reference.BPMSRestRemoteService"/>
       <resteasy:binding.rest name="rest1">
-        <resteasy:interfaces>com.redhat.workshop.services.reference.HelloWorldResource</resteasy:interfaces>
-        <resteasy:address>http://localhost:8180/remote-services</resteasy:address>
+        <resteasy:interfaces>com.redhat.workshop.services.reference.BPMSRestRemoteServiceResource</resteasy:interfaces>
+        <resteasy:address>http://localhost:8380/remote-services</resteasy:address>
       </resteasy:binding.rest>
     </sca:reference>
+    <sca:component name="CompUnoBean">
+      <bean:implementation.bean class="com.redhat.workshop.services.CompUnoBean"/>
+      <sca:service name="CompUno">
+        <sca:interface.java interface="com.redhat.workshop.services.CompUno"/>
+      </sca:service>
+    </sca:component>
+    <sca:service name="CompUno" promote="CompUnoBean/CompUno">
+      <sca:interface.java interface="com.redhat.workshop.services.CompUno"/>
+      <resteasy:binding.rest name="rest1">
+        <resteasy:interfaces>com.redhat.workshop.services.CompUnoResource</resteasy:interfaces>
+        <resteasy:contextPath>rest</resteasy:contextPath>
+      </resteasy:binding.rest>
+    </sca:service>
+    <sca:component name="CompTresBean">
+      <bean:implementation.bean class="com.redhat.workshop.services.CompTresBean"/>
+      <sca:service name="CompTres">
+        <sca:interface.java interface="com.redhat.workshop.services.CompTres"/>
+      </sca:service>
+      <sca:reference name="BPMSRestRemoteService">
+        <sca:interface.java interface="com.redhat.workshop.services.reference.BPMSRestRemoteService"/>
+      </sca:reference>
+    </sca:component>
+    <sca:service name="CompTres" promote="CompTresBean/CompTres">
+      <sca:interface.java interface="com.redhat.workshop.services.CompTres"/>
+      <resteasy:binding.rest name="rest1">
+        <resteasy:interfaces>com.redhat.workshop.services.CompTresSource</resteasy:interfaces>
+        <resteasy:contextPath>rest</resteasy:contextPath>
+      </resteasy:binding.rest>
+    </sca:service>
   </sca:composite>
   <sy:transforms>
-    <transform:transform.jaxb from="java:java.lang.String" to="{urn:com.redhat.workshop:services:1.0}processServiceResponse"/>
     <transform:transform.jaxb from="{urn:com.redhat.workshop:services:1.0}processService" to="java:com.redhat.workshop.services.MyForm"/>
-    <transform:transform.jaxb from="java:com.redhat.workshop.services.OutMessage" to="{urn:com.redhat.workshop:services:1.0}processServiceResponse"/>
+    <transform:transform.jaxb from="java:java.lang.String" to="{urn:com.redhat.workshop:services:1.0}processServiceResponse"/>
   </sy:transforms>
 </sy:switchyard>

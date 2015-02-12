@@ -6,13 +6,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/process")
-public interface MyLogicResource {
-
-	@Path("/form")
+@Path("/compuno")
+public interface CompUnoResource {
+	@Path("/call")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	@POST()
-	String processService(MyForm form);
-	
+	String callCompUno(MyForm form);
 }

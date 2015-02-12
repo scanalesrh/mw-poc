@@ -48,7 +48,7 @@ public class FormBean implements Serializable {
 	
 	public String procesaForm() throws Exception{
 //		this.result = ((OutMessage)service.callFormService(form)).getOut();
-		this.result = restService.callJsonRemoteRest("http://localhost:8280/rest/process/form", this.form);
+		this.result = restService.callJsonRemoteRest("http://localhost:8280/rest/service/comp/call/tres", this.form);
 		return "result.xhtml";
 	}
 
@@ -67,5 +67,6 @@ public class FormBean implements Serializable {
 	public void setForm(MyFormVO form) {
 		this.form = form;
 	}
+
 
 }
